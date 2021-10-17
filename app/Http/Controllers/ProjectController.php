@@ -31,8 +31,8 @@ class ProjectController extends Controller
     
                     $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $request->file);
         
-                    mkdir(env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER')."/files", "", $fileName));
-                    dump(env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER')."/files", "", $fileName));
+                    //mkdir(env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER')."/files", "", $fileName));
+                    dump(str_replace(env('ROOT_FOLDER')."/files", "", $fileName));
 
                     
         

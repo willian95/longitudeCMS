@@ -25,12 +25,26 @@ class ProjectController extends Controller
 
             if($this->prepareRender($request->file, $request->type)){
 
+              
+                if(strpos(strtoupper($type), "ZIP") > -1){
+    
+                    $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $file);
+        
+                    dump("sudo mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER')."/files", "", "test"));
+                    dump("sudo unzip ".$fileName." -d ".env('DESTINATION_FOLDER'));
+        
+                    exec("sudo mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER'), "", $fileName));
+                    exec("sudo unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
+        
+                }
+            
                 $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file);
                 $project->update();
             }
 
             $this->storeFiles($request, $project->id);
 
+            dump("here");
 
             
             return response()->json(["success" => true]);

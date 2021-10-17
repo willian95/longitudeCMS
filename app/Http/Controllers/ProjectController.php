@@ -134,7 +134,7 @@ class ProjectController extends Controller
             dump("mkdir ".env('DESTINATION_FOLDER').$fileName);
             dump("unzip ".$fileName." -d ".env('DESTINATION_FOLDER'));
 
-            exec("mkdir ".env('DESTINATION_FOLDER').$fileName);
+            exec("mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER'), "", $fileName));
             exec("unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
 
             return true;

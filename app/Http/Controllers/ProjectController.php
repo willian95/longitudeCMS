@@ -25,6 +25,8 @@ class ProjectController extends Controller
 
             $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file);
             $project->update();
+            dump(env('APP_URL'));
+            dump(env('RENDER_DOMAIN'));
             dd(str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file));
         }
 

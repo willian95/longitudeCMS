@@ -13,6 +13,8 @@ class ProjectController extends Controller
     
     function store(projectsStoreRequest $request){
 
+        $this->prepareRender($request->image);
+
         $project = new Project;
         $project->title = $request->title;
         $project->description = $request->description;
@@ -38,7 +40,6 @@ class ProjectController extends Controller
             $modelFile->save();
 
         }
-
 
     }
 
@@ -103,9 +104,16 @@ class ProjectController extends Controller
 
     }
 
-    function prepareRender($project){
+    function prepareRender($file, $type){
 
+        if(strtoupper($type) == "JPG"){
 
+            $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'));
+
+            dd($fileName);
+            
+
+        }
 
     }
 

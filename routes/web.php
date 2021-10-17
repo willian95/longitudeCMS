@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
+use App\Http\Controllers\ProjectController;
 
 
 /*
@@ -30,6 +31,11 @@ Route::get('/home', function () {
 Route::post("/upload/file", [FileController::class, "upload"]);
 
 Route::view("project/create", "projects.create.index")->name("project.create");
+Route::view("project/list", "projects.list.index")->name("project.list");
+Route::post("/project/store", [ProjectController::class, "store"])->name("project.store");
+Route::get("/project/edit/{id}", [ProjectController::class, "edit"])->name("project.edit");
+Route::post("/project/update", [ProjectController::class, "update"])->name("project.update");
+Route::get("/project/fetch", [ProjectController::class, "fetch"])->name("project.fetch");
 
 
 

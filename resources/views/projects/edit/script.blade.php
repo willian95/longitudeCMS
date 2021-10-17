@@ -6,33 +6,35 @@
         data(){
             return{
 
-                name:"",
+                id:"{{ $project->id }}",
+                name:"{{ $project->title }}",
+                showMainFilePreview:"{{ $project->file }}",
+                showMainFileType:"{{ $project->type }}",
+
 
                 imagesToUpload:[],
-                workImages:[],
+                workImages:{!! json_encode($files) !!},
                 secondaryPreviewPicture:"",
                 secondaryPicture:"",
 
-                location:"",
-                squareMeter:"",
-                projectType:"",
                 description:"",
                 action:"create",
 
                 errors:[],
                 loading:false,
 
-                imagePreview:"",
+                imagePreview:"{{ $project->image }}",
                 file:"",
                 imageProgress:0,
-                pictureStatus:"",
-                finalPictureName:"",
+                pictureStatus:"listo",
+                finalPictureName:"{{ $project->image }}",
 
                 mainFile:"",
+                mainFilePreview:"",
                 mainFileProgress:0,
-                mainFileStatus:"",
-                finalMainFileName:"",
-                mainFileType:"",
+                mainFileStatus:"listo",
+                finalMainFileName:"{{ $project->file }}",
+                mainFileType:"{{ $project->type }}",
 
                 secondaryPicture:"",
                 secondaryPreviewPicture:"",
@@ -43,7 +45,7 @@
         },
         methods:{
 
-            store(){
+            update(){
 
                 this.imagesToUpload = []
                 if(this.finalPictureName == ""){
@@ -77,11 +79,13 @@
                 if(completeUploading && this.pictureStatus == "listo" && this.mainFileStatus == "listo"){
 
                     this.workImages.forEach((data) => {
-                        this.imagesToUpload.push({finalName:data.finalName, extension: data.extension})
+                        
+                        this.imagesToUpload.push({id: data.id, finalName:data.file, type: data.type})
                     })
 
                     this.loading = true
-                    axios.post("{{ url('/project/store') }}", {
+                    axios.post("{{ route('project.update') }}", {
+                        id:this.id,
                         title:this.name,
                         image: this.finalPictureName,
                         description: CKEDITOR.instances.editor1.getData(),
@@ -94,7 +98,7 @@
 
                             swal({
                                 title: "Excelente!",
-                                text: "Proyecto creado!",
+                                text: "Proyecto actualizado!",
                                 icon: "success"
                             }).then(function() {
                                 //window.location.href = "{{ url('products/list') }}";
@@ -285,10 +289,12 @@
 
                         let returnedName = res.data.originalName.toLowerCase()
 
-                        if(data.originalName.toLowerCase() == returnedName.toLowerCase()){
-                            this.workImages[index].status = "listo";
-                            this.workImages[index].finalName = res.data.fileRoute
-                            this.workImages[index].extension = res.data.extension
+                        if(data.originalName){
+                            if(data.originalName.toLowerCase() == returnedName.toLowerCase()){
+                                this.workImages[index].status = "listo";
+                                this.workImages[index].file = res.data.fileRoute
+                                this.workImages[index].type = res.data.extension
+                            }
                         }
 
                     })
@@ -302,7 +308,7 @@
 
                 if(this.secondaryPicture != null){
                     this.uploadSecondaryFile()
-                    this.workImages.push({file: this.secondaryPicture, status: "subiendo", originalName:this.fileName, extension:"", finalName:"", progress:0})
+                    this.workImages.push({file: this.secondaryPicture, status: "subiendo", originalName:this.fileName, type:"", file:"", progress:0})
 
                     this.secondaryPicture = ""
                     this.secondaryPreviewPicture = ""
@@ -399,6 +405,11 @@
                 }).catch(err => {
                     console.log(err)
                 })
+
+            },
+            deleteWorkImage(index){
+
+                this.workImages.splice(index, 1)
 
             },
 

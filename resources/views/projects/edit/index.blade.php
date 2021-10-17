@@ -13,7 +13,7 @@
                 <!--begin::Header-->
                 <div class="card-header flex-wrap border-0 pt-6 pb-0">
                     <div class="card-title">
-                        <h3 class="card-label">Crear proyecto
+                        <h3 class="card-label">Editar proyecto
                     </div>
                 </div>
                 <!--end::Header-->
@@ -58,6 +58,12 @@
                                     <input type="file" class="form-control" ref="file" @change="onMainFileChange" accept="*" style="overflow: hidden;" id="mainFileInput">
                                 </form>
                                 
+                                <img id="blah" :src="showMainFilePreview" v-if="showMainFileType == 'jpg' || showMainFileType == 'png'" class="full-image" style="margin-top: 10px; width: 40%">
+
+                                <video class="w-50" v-if="showMainFileType == 'mp4'" controls>
+                                    <source :src="showMainFilePreview" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
 
                                 <div v-if="mainFileStatus == 'subiendo'" class="progress-bar progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100" :style="{'width': `${mainFileProgress}%`}">
                                     @{{ mainFileProgress }}%
@@ -73,7 +79,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="description">Descripción</label>
-                                <textarea rows="3" id="editor1"></textarea>
+                                <textarea rows="3" id="editor1">{{ $project->description }}</textarea>
                                 <small v-if="errors.hasOwnProperty('description')">@{{ errors['description'][0] }}</small>
                             </div>
                         </div>
@@ -92,6 +98,7 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
+                                        <th>Preview</th>
                                         <th>Tipo de archivo</th>
                                         <th>Progreso</th>
                                         <th>Acción</th>
@@ -100,9 +107,18 @@
                                 <tbody>
                                     <tr v-for="(workImage, index) in workImages">
                                         <td>@{{ index + 1 }}</td>
-
                                         <td>
-                                            @{{ workImage.extension }}
+
+                                            <img id="blah" :src="workImage.file" v-if="workImage.type == 'jpg' || workImage.type == 'png'" class="full-image" style="margin-top: 10px; width: 40%">
+
+                                            <video style="width: 250px;" v-if="workImage.type == 'mp4'" controls>
+                                                <source :src="workImage.file" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        
+                                        </td>
+                                        <td>
+                                            @{{ workImage.type }}
                                         </td>
                                         <td>
 
@@ -129,7 +145,7 @@
                     <div class="row">
                         <div class="col-12">
                             <p class="text-center">
-                                <button class="btn btn-success" @click="store()">Crear</button>
+                                <button class="btn btn-success" @click="update()">Actualizar</button>
                             </p>
                         </div>
                     </div>
@@ -142,7 +158,7 @@
         </div>
         <!--end::Container-->
 
-        @include("projects.create.modal")
+        @include("projects.edit.modal")
 
 
     </div>
@@ -151,6 +167,6 @@
 
 @push("scripts")
 
-    @include("projects.create.script")
+    @include("projects.edit.script")
 
 @endpush

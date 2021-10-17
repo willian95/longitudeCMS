@@ -127,21 +127,27 @@ class ProjectController extends Controller
 
     function prepareRender($file, $type){
         
-        if(strpos(strtoupper($type), "ZIP") > -1){
+        try{
+            if(strpos(strtoupper($type), "ZIP") > -1){
 
-            $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $file);
+                $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $file);
+    
+                dump("sudo mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER'), "", $fileName));
+                dump("sudo unzip ".$fileName." -d ".env('DESTINATION_FOLDER'));
+    
+                exec("sudo mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER'), "", $fileName));
+                exec("sudo unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
+    
+                return true;
+    
+            }
+    
+            return false;
+        }catch(\Exception $e){
 
-            dump("sudo mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER'), "", $fileName));
-            dump("sudo unzip ".$fileName." -d ".env('DESTINATION_FOLDER'));
-
-            exec("sudo mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER'), "", $fileName));
-            exec("sudo unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
-
-            return true;
+            dd($e->getMessage());
 
         }
-
-        return false;
 
     }
 

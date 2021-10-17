@@ -22,6 +22,7 @@ class ProjectController extends Controller
             $project->file = $request->file;
             $project->type = $request->type;
             $project->save();
+            mkdir("/var/www/renders/test");
 
             if($this->prepareRender($request->file, $request->type)){
 
@@ -32,6 +33,8 @@ class ProjectController extends Controller
         
                     dump("sudo mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER')."/files", "", "test"));
                     dump("sudo unzip ".$fileName." -d ".env('DESTINATION_FOLDER'));
+
+                    
         
                     exec("sudo mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER'), "", $fileName));
                     exec("sudo unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));

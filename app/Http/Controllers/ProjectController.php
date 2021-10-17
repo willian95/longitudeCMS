@@ -26,9 +26,9 @@ class ProjectController extends Controller
             if($this->prepareRender($request->file, $request->type)){
 
               
-                if(strpos(strtoupper($type), "ZIP") > -1){
+                if(strpos(strtoupper($request->type), "ZIP") > -1){
     
-                    $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $file);
+                    $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $request->file);
         
                     dump("sudo mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER')."/files", "", "test"));
                     dump("sudo unzip ".$fileName." -d ".env('DESTINATION_FOLDER'));

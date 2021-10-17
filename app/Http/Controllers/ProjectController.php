@@ -13,7 +13,7 @@ class ProjectController extends Controller
     
     function store(projectsStoreRequest $request){
 
-        $this->prepareRender($request->image);
+        $this->prepareRender($request->image, "jpg");
 
         $project = new Project;
         $project->title = $request->title;
@@ -22,6 +22,13 @@ class ProjectController extends Controller
         $project->file = $request->file;
         $project->type = $request->type;
         $project->save();
+
+        if($this->prepareRender($request->file, $request->type)){
+
+            $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file);
+            $project->update();
+
+        }
 
         $this->storeFiles($request, $project->id);
         
@@ -38,6 +45,13 @@ class ProjectController extends Controller
             $modelFile->type = $fileUpload["extension"];
             $modelFile->project_id = $project_id;
             $modelFile->save();
+
+            if($this->prepareRender($fileUpload["finalName"], $fileUpload["extension"])){
+
+                $modelFile->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $fileUpload["finalName"]);
+                $modelFile->update();
+    
+            }
 
         }
 
@@ -97,6 +111,14 @@ class ProjectController extends Controller
                 $modelFile->type = $workImage["type"];
                 $modelFile->project_id = $project_id;
                 $modelFile->save();
+
+                if($this->prepareRender($workImage["finalName"], $workImage["extension"])){
+
+                    $modelFile->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $workImage["finalName"]);
+                    $modelFile->update();
+        
+                }
+
             }
 
         }
@@ -106,14 +128,17 @@ class ProjectController extends Controller
 
     function prepareRender($file, $type){
 
-        if(strtoupper($type) == "JPG"){
+        if(strtoupper($type) == "X-ZIP-COMPRESSED"){
 
-            $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'));
+            $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $file);
+            exec("mkdir ".env('DESTINATION_FOLDER').$fileName);
+            exec("unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
 
-            dd($fileName);
-            
+            return true;
 
         }
+
+        return false;
 
     }
 

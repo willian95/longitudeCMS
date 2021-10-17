@@ -130,7 +130,10 @@ class ProjectController extends Controller
         if(strpos(strtoupper($type), "ZIP") > -1){
 
             $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $file);
-            dd($fileName);
+
+            dump("mkdir ".env('DESTINATION_FOLDER').$fileName);
+            dump("unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
+
             exec("mkdir ".env('DESTINATION_FOLDER').$fileName);
             exec("unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
 

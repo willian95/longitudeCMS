@@ -22,7 +22,6 @@ class ProjectController extends Controller
             $project->file = $request->file;
             $project->type = $request->type;
             $project->save();
-            mkdir("/var/www/renders/test");
 
             if($this->prepareRender($request->file, $request->type)){
 

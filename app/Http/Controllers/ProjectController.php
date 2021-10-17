@@ -13,8 +13,6 @@ class ProjectController extends Controller
     
     function store(projectsStoreRequest $request){
 
-        $this->prepareRender($request->image, "jpg");
-
         $project = new Project;
         $project->title = $request->title;
         $project->description = $request->description;
@@ -27,10 +25,12 @@ class ProjectController extends Controller
 
             $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file);
             $project->update();
-
+            dd("entre");
         }
 
         $this->storeFiles($request, $project->id);
+
+
         
         return response()->json(["success" => true]);
 

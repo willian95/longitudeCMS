@@ -126,10 +126,11 @@ class ProjectController extends Controller
     }
 
     function prepareRender($file, $type){
-        dd(strpos(strtoupper($type), "ZIP"));
+        
         if(strpos(strtoupper($type), "ZIP") > -1){
 
             $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $file);
+            dd($fileName);
             exec("mkdir ".env('DESTINATION_FOLDER').$fileName);
             exec("unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
 

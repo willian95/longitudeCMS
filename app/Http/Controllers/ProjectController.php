@@ -25,9 +25,6 @@ class ProjectController extends Controller
 
             $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file);
             $project->update();
-            dump(env('APP_URL'));
-            dump(env('RENDER_DOMAIN'));
-            dd(str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file));
         }
 
         $this->storeFiles($request, $project->id);
@@ -129,7 +126,7 @@ class ProjectController extends Controller
     }
 
     function prepareRender($file, $type){
-
+        dd(strpos(strtoupper($type), "ZIP"));
         if(strpos(strtoupper($type), "ZIP") > -1){
 
             $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $file);

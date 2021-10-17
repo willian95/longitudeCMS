@@ -32,7 +32,7 @@ class ProjectController extends Controller
                     $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $request->file);
         
                     mkdir(env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER')."/files", "", $fileName));
-                    dump("sudo unzip ".$fileName." -d ".env('DESTINATION_FOLDER'));
+                    dump(env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER')."/files", "", $fileName));
 
                     
         

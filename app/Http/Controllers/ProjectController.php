@@ -128,7 +128,7 @@ class ProjectController extends Controller
 
     function prepareRender($file, $type){
 
-        if(strtoupper($type) == "X-ZIP-COMPRESSED"){
+        if(strpos(strtoupper($type), "ZIP") > -1){
 
             $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $file);
             exec("mkdir ".env('DESTINATION_FOLDER').$fileName);

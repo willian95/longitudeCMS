@@ -13,25 +13,34 @@ class ProjectController extends Controller
     
     function store(projectsStoreRequest $request){
 
-        $project = new Project;
-        $project->title = $request->title;
-        $project->description = $request->description;
-        $project->image = $request->image;
-        $project->file = $request->file;
-        $project->type = $request->type;
-        $project->save();
+        try{
 
-        if($this->prepareRender($request->file, $request->type)){
+            $project = new Project;
+            $project->title = $request->title;
+            $project->description = $request->description;
+            $project->image = $request->image;
+            $project->file = $request->file;
+            $project->type = $request->type;
+            $project->save();
 
-            $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file);
-            $project->update();
+            if($this->prepareRender($request->file, $request->type)){
+
+                $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file);
+                $project->update();
+            }
+
+            $this->storeFiles($request, $project->id);
+
+
+            
+            return response()->json(["success" => true]);
+
+        }catch(\Exception $e){
+
+            dd($e->getMessage());
+
         }
-
-        $this->storeFiles($request, $project->id);
-
-
         
-        return response()->json(["success" => true]);
 
     }
 

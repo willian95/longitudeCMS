@@ -25,7 +25,7 @@ class ProjectController extends Controller
 
             $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file);
             $project->update();
-            dd("entre");
+            dd(str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file));
         }
 
         $this->storeFiles($request, $project->id);

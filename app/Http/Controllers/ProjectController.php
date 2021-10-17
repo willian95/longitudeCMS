@@ -29,14 +29,15 @@ class ProjectController extends Controller
                 if(strpos(strtoupper($request->type), "ZIP") > -1){
     
                     $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $request->file);
-        
-                    //mkdir(env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER')."/files", "", $fileName));
-                    dump(str_replace(env('ROOT_FOLDER')."/files", "", $fileName));
 
+                    $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
+                    $folderName = str_replace(".zip", "", $folderName);
+                    $folderName = str_replace("/", "", $folderName);
+        
+                    mkdir(env('DESTINATION_FOLDER').$folderName);
                     
-        
 
-                    exec("sudo unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
+                    //exec("sudo unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
         
                 }
             
@@ -154,14 +155,6 @@ class ProjectController extends Controller
         
         try{
             if(strpos(strtoupper($type), "ZIP") > -1){
-
-                $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $file);
-    
-                dump("sudo mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER')."/files", "", "test"));
-                dump("sudo unzip ".$fileName." -d ".env('DESTINATION_FOLDER'));
-    
-                exec("sudo mkdir ".env('DESTINATION_FOLDER').str_replace(env('ROOT_FOLDER'), "", $fileName));
-                exec("sudo unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
     
                 return true;
     

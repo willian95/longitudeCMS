@@ -33,11 +33,10 @@ class ProjectController extends Controller
                     $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
                     $folderName = str_replace(".zip", "", $folderName);
                     $folderName = str_replace("/", "", $folderName);
-        
-                    mkdir(env('DESTINATION_FOLDER').$folderName);
-                    
 
-                    //exec("sudo unzip ".env('ROOT_FOLDER').$fileName." -d ".env('DESTINATION_FOLDER'));
+                    mkdir(env('DESTINATION_FOLDER').$folderName);
+
+                    exec("sudo unzip ".$fileName." -d ".env('DESTINATION_FOLDER').$folderName);
         
                 }
             

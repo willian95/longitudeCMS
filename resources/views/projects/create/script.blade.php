@@ -97,7 +97,7 @@
                                 text: "Proyecto creado!",
                                 icon: "success"
                             }).then(function() {
-                                //window.location.href = "{{ url('products/list') }}";
+                                window.location.href = "{{ route('project.list') }}";
                             });
 
 

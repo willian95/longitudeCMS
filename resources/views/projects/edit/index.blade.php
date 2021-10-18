@@ -65,6 +65,10 @@
                                     Your browser does not support the video tag.
                                 </video>
 
+                                <iframe
+                                    v-if="showMainFileType == 'zip'" :src="showMainFilePreview">
+                                </iframe>
+
                                 <div v-if="mainFileStatus == 'subiendo'" class="progress-bar progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100" :style="{'width': `${mainFileProgress}%`}">
                                     @{{ mainFileProgress }}%
                                 </div>
@@ -115,6 +119,10 @@
                                                 <source :src="workImage.file" type="video/mp4">
                                                 Your browser does not support the video tag.
                                             </video>
+
+                                            <iframe
+                                                v-if="workImage.type == 'zip'" :src="workImage.file">
+                                            </iframe>
                                         
                                         </td>
                                         <td>

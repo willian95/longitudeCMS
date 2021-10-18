@@ -46,7 +46,7 @@ class ProjectController extends Controller
                         $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
                         $zip->close();
 
-                        $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN').$folderName."/index.html", $request->file);
+                        $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN').$folderName."/index.html", $filename);
                         $project->update();
 
             

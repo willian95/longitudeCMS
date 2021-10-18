@@ -42,7 +42,7 @@ class ProjectController extends Controller
 
 
                 
-                    $zip = new ZipArchive;
+                    $zip = new \ZipArchive;
                     $res = $zip->open($fileName);
                     if ($res === TRUE) {
                         $zip->extractTo(env('DESTINATION_FOLDER').$folderName);

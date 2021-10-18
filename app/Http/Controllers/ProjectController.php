@@ -180,7 +180,7 @@ class ProjectController extends Controller
 
                 if($this->prepareRender($workImage["finalName"], $workImage["type"])){
 
-                    $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $request->file);
+                    $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $workImage["finalName"]);
 
                     $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
                     $folderName = str_replace(".zip", "", $folderName);

@@ -108,8 +108,6 @@ class ProjectController extends Controller
                         $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
                         $modelFile->update();
 
-                        dd($modelFile->file);
-
             
                     } else {
                         return response()->json(["success" => false]);

@@ -85,7 +85,6 @@ class ProjectController extends Controller
 
             if($this->prepareRender($fileUpload["finalName"], $fileUpload["extension"])){
 
-              
                 if(strpos(strtoupper($fileUpload["extension"]), "ZIP") > -1){
     
                     $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $fileUpload["finalName"]);
@@ -105,8 +104,8 @@ class ProjectController extends Controller
                     if ($res === TRUE) {
                         $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
                         $zip->close();
-
-                        $modelFile->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN').$folderName."/index.html", $fileUpload["extension"]);
+                        
+                        $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
                         $modelFile->update();
 
             

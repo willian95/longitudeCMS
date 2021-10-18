@@ -40,32 +40,27 @@ class ProjectController extends Controller
 
                     }
 
-
-                
                     $zip = new \ZipArchive;
                     $res = $zip->open($fileName);
                     if ($res === TRUE) {
                         $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
                         $zip->close();
-                        echo 'woot!';
+
+                        $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN').$folderName."/index.html", $request->file);
+                        $project->update();
+
+            
                     } else {
-                        echo 'doh!';
+                        return response()->json(["success" => false]);
                     }
 
-                    
-
-                    exec("sudo unzip ".$fileName." -d ".env('DESTINATION_FOLDER').$folderName);
         
                 }
             
-                $project->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $request->file);
-                $project->update();
+                
             }
 
             $this->storeFiles($request, $project->id);
-
-            dump("here");
-
             
             return response()->json(["success" => true]);
 
@@ -87,6 +82,43 @@ class ProjectController extends Controller
             $modelFile->type = $fileUpload["extension"];
             $modelFile->project_id = $project_id;
             $modelFile->save();
+
+            if($this->prepareRender($fileUpload["finalName"], $fileUpload["extension"])){
+
+              
+                if(strpos(strtoupper($fileUpload["extension"]), "ZIP") > -1){
+    
+                    $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $fileUpload["finalName"]);
+
+                    $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
+                    $folderName = str_replace(".zip", "", $folderName);
+                    $folderName = str_replace("/", "", $folderName);
+
+                    if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
+
+                        mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
+
+                    }
+
+                    $zip = new \ZipArchive;
+                    $res = $zip->open($fileName);
+                    if ($res === TRUE) {
+                        $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
+                        $zip->close();
+
+                        $modelFile->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN').$folderName."/index.html", $fileUpload["extension"]);
+                        $modelFile->update();
+
+            
+                    } else {
+                        return response()->json(["success" => false]);
+                    }
+
+        
+                }
+            
+                
+            }
 
             if($this->prepareRender($fileUpload["finalName"], $fileUpload["extension"])){
 

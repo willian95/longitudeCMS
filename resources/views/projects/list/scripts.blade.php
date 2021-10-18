@@ -51,7 +51,7 @@
                 .then((willDelete) => {
                     if (willDelete) {
                         this.loading = true
-                        axios.post("{{ url('/products/delete/') }}", {id: id}).then(res => {
+                        axios.post("{{ route('project.delete') }}", {id: id}).then(res => {
                             this.loading = false
                             if(res.data.success == true){
                                 swal({

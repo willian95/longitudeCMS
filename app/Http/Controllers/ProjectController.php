@@ -225,4 +225,18 @@ class ProjectController extends Controller
 
     }
 
+    function delete(Request $request){
+
+        $files = File::where("project_id", $request->id)->get();
+        foreach($files as $file){
+
+            $file->delete();
+
+        }
+
+        Project::find($request->id)->delete();
+        return response()->json(["success" => true, "msg" => "Proyecto eliminado"]);
+
+    }
+
 }

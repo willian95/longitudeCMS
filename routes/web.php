@@ -36,6 +36,7 @@ Route::post("/project/store", [ProjectController::class, "store"])->name("projec
 Route::get("/project/edit/{id}", [ProjectController::class, "edit"])->name("project.edit");
 Route::post("/project/update", [ProjectController::class, "update"])->name("project.update");
 Route::get("/project/fetch", [ProjectController::class, "fetch"])->name("project.fetch");
+Route::post("/project/delete", [ProjectController::class, "delete"])->name("project.delete");
 
 
 

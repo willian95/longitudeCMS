@@ -104,9 +104,11 @@ class ProjectController extends Controller
                     if ($res === TRUE) {
                         $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
                         $zip->close();
-                        dd(env('RENDER_DOMAIN').$folderName."/index.html");
+                        
                         $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
                         $modelFile->update();
+
+                        dd($modelFile->file);
 
             
                     } else {

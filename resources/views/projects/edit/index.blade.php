@@ -121,7 +121,7 @@
                                             </video>
 
                                             <iframe
-                                                v-if="workImage.type == 'zip'" :src="workImage.file">
+                                                v-if="workImage.type == 'zip' && workImage.file.indexOf('html') > 0" :src="workImage.file">
                                             </iframe>
                                         
                                         </td>

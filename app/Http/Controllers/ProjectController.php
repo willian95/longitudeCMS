@@ -34,19 +34,25 @@ class ProjectController extends Controller
                     $folderName = str_replace(".zip", "", $folderName);
                     $folderName = str_replace("/", "", $folderName);
 
-                    if(mkdir(env('DESTINATION_FOLDER').$folderName)){
+                    if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
 
-                        $zip = new ZipArchive;
-                        $res = $zip->open($fileName);
-                        if ($res === TRUE) {
-                            $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
-                            $zip->close();
-                            echo 'woot!';
-                        } else {
-                            echo 'doh!';
-                        }
+                        mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
 
                     }
+
+
+                
+                    $zip = new ZipArchive;
+                    $res = $zip->open($fileName);
+                    if ($res === TRUE) {
+                        $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
+                        $zip->close();
+                        echo 'woot!';
+                    } else {
+                        echo 'doh!';
+                    }
+
+                    
 
                     exec("sudo unzip ".$fileName." -d ".env('DESTINATION_FOLDER').$folderName);
         

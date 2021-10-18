@@ -119,13 +119,6 @@ class ProjectController extends Controller
                 
             }
 
-            if($this->prepareRender($fileUpload["finalName"], $fileUpload["extension"])){
-
-                $modelFile->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $fileUpload["finalName"]);
-                $modelFile->update();
-    
-            }
-
         }
 
     }
@@ -205,16 +198,13 @@ class ProjectController extends Controller
                         $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
                         $zip->close();
 
-                        $project->file = env('RENDER_DOMAIN').$folderName."/index.html";
-                        $project->update();
+                        $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
+                        $modelFile->update();
 
             
                     } else {
                         return response()->json(["success" => false]);
                     }
-
-                    $modelFile->file = str_replace(env('APP_URL'), env('RENDER_DOMAIN'), $workImage["finalName"]);
-                    $modelFile->update();
         
                 }
 

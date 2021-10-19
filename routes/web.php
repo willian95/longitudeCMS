@@ -31,15 +31,15 @@ Route::get('/home', function () {
 
 Route::post("/upload/file", [FileController::class, "upload"]);
 
-Route::view("project/create", "projects.create.index")->name("project.create");
-Route::view("project/list", "projects.list.index")->name("project.list");
+Route::view("project/create", "projects.create.index")->name("project.create")->middleware("auth");
+Route::view("project/list", "projects.list.index")->name("project.list")->middleware("auth");
 Route::post("/project/store", [ProjectController::class, "store"])->name("project.store");
 Route::get("/project/edit/{id}", [ProjectController::class, "edit"])->name("project.edit");
 Route::post("/project/update", [ProjectController::class, "update"])->name("project.update");
 Route::get("/project/fetch", [ProjectController::class, "fetch"])->name("project.fetch");
 Route::post("/project/delete", [ProjectController::class, "delete"])->name("project.delete");
 
-Route::view("services/list", "services.list.index")->name("services.list");
+Route::view("services/list", "services.list.index")->name("services.list")->middleware("auth");
 Route::get("/services/fetch", [ServiceController::class, "fetch"])->name("services.fetch");
 Route::get("/services/edit/{id}", [ServiceController::class, "edit"])->name("services.edit");
 Route::post("/services/update", [ServiceController::class, "update"])->name("services.update");

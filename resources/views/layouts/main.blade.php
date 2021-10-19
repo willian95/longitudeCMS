@@ -174,6 +174,14 @@ License: You must have a valid license purchased only from themeforest(the above
 										</ul>
 									</div>
 								</li>
+
+								<li class="menu-item menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+									<a href="{{ route('services.list') }}" class="menu-link menu-toggle">
+										<i class="menu-icon flaticon2-website"></i>
+										<span class="menu-text">Servicios</span>
+										<i class="menu-arrow"></i>
+									</a>
+								</li>
 								
 							</ul>
 							<!--end::Menu Nav-->

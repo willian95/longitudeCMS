@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\ServiceController;
 
 
 /*
@@ -37,6 +38,11 @@ Route::get("/project/edit/{id}", [ProjectController::class, "edit"])->name("proj
 Route::post("/project/update", [ProjectController::class, "update"])->name("project.update");
 Route::get("/project/fetch", [ProjectController::class, "fetch"])->name("project.fetch");
 Route::post("/project/delete", [ProjectController::class, "delete"])->name("project.delete");
+
+Route::view("services/list", "services.list.index")->name("services.list");
+Route::get("/services/fetch", [ServiceController::class, "fetch"])->name("services.fetch");
+Route::get("/services/edit/{id}", [ServiceController::class, "edit"])->name("services.edit");
+Route::post("/services/update", [ServiceController::class, "update"])->name("services.update");
 
 
 

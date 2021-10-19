@@ -17,7 +17,7 @@ License: You must have a valid license purchased only from themeforest(the above
 	<!--begin::Head-->
 	<head><base href="../../../">
 		<meta charset="utf-8" />
-		<title>LaLiberty</title>
+		<title>Longittude</title>
 		<meta name="description" content="User datatable listing" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<link rel="canonical" href="https://keenthemes.com/metronic" />
@@ -32,7 +32,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--begin::Layout Themes(used by all pages)-->
 		<!--end::Layout Themes-->
 		<!--<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />-->
-		<link rel="shortcut icon" type="image/x-icon" href="https://www.laliberty.com.co/coming/assets/img/favicon.png">
+		<link rel="shortcut icon" type="image/x-icon" href="{{ url('logo_blue.svg') }}">
 
 		<script>
 
@@ -87,7 +87,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
 			<!--begin::Logo-->
 			<a href="{{ url('/') }}">
-				<img alt="Logo" class="w-45px" src="https://www.laliberty.com.co/assets/img/logo1.png" style="filter: invert(1);" />
+				<img alt="Logo" class="w-45px" src="{{ url('/logo_blue.svg') }}" />
 			</a>
 			<!--end::Logo-->
 			<!--begin::Toolbar-->
@@ -130,7 +130,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					<div class="brand flex-column-auto" id="kt_brand">
 						<!--begin::Logo-->
 						<a href="{{ url('/') }}">
-							<img alt="Logo" src="https://www.laliberty.com.co/assets/img/logo1.png" style="filter: invert(1); width: 100px;" />
+							<img alt="Logo" src="{{ url('/logo_blue.svg') }}" />
 						</a>
 					</div>
 					<!--end::Brand-->
@@ -249,7 +249,7 @@ License: You must have a valid license purchased only from themeforest(the above
 							<!--begin::Copyright-->
 							<div class="text-dark text-center" style="width: 100%;">
 								<span class="text-muted font-weight-bold mr-2">2020 - 2021©</span>
-								<a href="h#" target="_blank" class="text-dark-75 text-hover-primary">Longitude Copyright</a>
+								<a href="h#" target="_blank" class="text-dark-75 text-hover-primary">Longittude Copyright</a>
 							</div>
 							<!--end::Copyright-->
 							<!--begin::Nav-->

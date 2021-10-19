@@ -32,7 +32,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<!--begin::Layout Themes(used by all pages)-->
 		<!--end::Layout Themes-->
 		<!--<link rel="shortcut icon" href="assets/media/logos/favicon.ico" />-->
-		<link rel="shortcut icon" type="image/x-icon" href="{{ url('logo_blue.svg') }}">
+		<link rel="shortcut icon" type="image/x-icon" href="{{ url('logo_white.svg') }}">
 
 		<script>
 
@@ -87,7 +87,7 @@ License: You must have a valid license purchased only from themeforest(the above
 		<div id="kt_header_mobile" class="header-mobile align-items-center header-mobile-fixed">
 			<!--begin::Logo-->
 			<a href="{{ url('/') }}">
-				<img alt="Logo" class="w-45px" src="{{ url('/logo_blue.svg') }}" />
+				<img alt="Logo" class="w-45px" src="{{ url('/logo_white.svg') }}" />
 			</a>
 			<!--end::Logo-->
 			<!--begin::Toolbar-->
@@ -130,7 +130,7 @@ License: You must have a valid license purchased only from themeforest(the above
 					<div class="brand flex-column-auto" id="kt_brand">
 						<!--begin::Logo-->
 						<a href="{{ url('/') }}">
-							<img alt="Logo" src="{{ url('/logo_blue.svg') }}" />
+							<img alt="Logo" src="{{ url('/logo_white.svg') }}" style="width: 100px;"/>
 						</a>
 					</div>
 					<!--end::Brand-->

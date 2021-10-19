@@ -20,7 +20,7 @@ use App\Http\Controllers\ServiceController;
 
 Route::get('/', function () {
     return view('welcome');
-})->middleware("guest");
+})->middleware("guest")->name("login");
 
 Route::post("login", [AuthController::class, "login"]);
 Route::get("logout", [AuthController::class, "logout"])->name("logout");

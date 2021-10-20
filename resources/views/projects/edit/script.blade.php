@@ -361,7 +361,8 @@
                     (file['type'].split('/')[0] == "image" && file['type'].split('/')[1].toUpperCase() == "PNG") || 
                     (file['type'].split('/')[0] == "image" && file['type'].split('/')[1].toUpperCase() == "JPG")  || 
                     (file['type'].split('/')[0] == "image" && file['type'].split('/')[1].toUpperCase() == "JPEG")  || 
-                    (file['type'].split('/')[0] == "video" && file['type'].split('/')[1].toUpperCase() == "MP4")
+                    (file['type'].split('/')[0] == "video" && file['type'].split('/')[1].toUpperCase() == "MP4") ||
+                    (/*file['type'].split('/')[0] == "application" && */file['type'].split('/')[1].toUpperCase().indexOf("ZIP") >= 0)
                   
                     ){
                         return true

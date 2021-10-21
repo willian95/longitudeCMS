@@ -142,6 +142,43 @@ class ProjectController extends Controller
         $project->type = $request->type;
         $project->update();
 
+        if($this->prepareRender($request->file, $request->type)){
+
+              
+            if(strpos(strtoupper($request->type), "ZIP") > -1){
+
+                $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $request->file);
+
+                $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
+                $folderName = str_replace(".zip", "", $folderName);
+                $folderName = str_replace("/", "", $folderName);
+
+                if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
+
+                    mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
+
+                }
+
+                $zip = new \ZipArchive;
+                $res = $zip->open($fileName);
+                if ($res === TRUE) {
+                    $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
+                    $zip->close();
+
+                    $project->file = env('RENDER_DOMAIN').$folderName."/index.html";
+                    $project->update();
+
+        
+                } else {
+                    return response()->json(["success" => false]);
+                }
+
+    
+            }
+        
+            
+        }
+
         $this->updateFiles($request, $project->id);
         
         return response()->json(["success" => true]);

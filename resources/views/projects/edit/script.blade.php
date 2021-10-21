@@ -58,16 +58,6 @@
                     return
                 }
 
-                if(this.finalMainFileName == ""){
-
-                    swal({
-                        text:"Debes agregar un archivo principal",
-                        icon:"warning"
-                    })
-
-                    return
-                }
-
                 var completeUploading = true
 
                 this.workImages.forEach((data) => {

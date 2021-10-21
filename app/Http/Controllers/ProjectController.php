@@ -138,14 +138,14 @@ class ProjectController extends Controller
         $project->title = $request->title;
         $project->description = $request->description;
         $project->image = $request->image;
-        if(iseet($request->file)){
+        if(isset($request->file)){
             $project->file = $request->file;
             $project->type = $request->type;
         }
         
         $project->update();
 
-        if(iseet($request->file)){
+        if(isset($request->file)){
             if($this->prepareRender($request->file, $request->type)){
 
                 

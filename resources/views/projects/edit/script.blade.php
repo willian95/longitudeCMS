@@ -33,8 +33,8 @@
                 mainFilePreview:"",
                 mainFileProgress:0,
                 mainFileStatus:"listo",
-                finalMainFileName:"{{ $project->file }}",
-                mainFileType:"{{ $project->type }}",
+                finalMainFileName:"",
+                mainFileType:"",
 
                 secondaryPicture:"",
                 secondaryPreviewPicture:"",

@@ -113,9 +113,9 @@
                                         <td>@{{ index + 1 }}</td>
                                         <td>
 
-                                            <img id="blah" :src="workImage.file" v-if="workImage.type == 'jpg' || workImage.type == 'png'" class="full-image" style="margin-top: 10px; width: 40%">
+                                            <img id="blah" :src="workImage.file" v-if="workImage.type == 'JPG' || workImage.type == 'PNG'" class="full-image" style="margin-top: 10px; width: 40%">
 
-                                            <video style="width: 250px;" v-if="workImage.type == 'mp4'" controls>
+                                            <video style="width: 250px;" v-if="workImage.type == 'MP$'" controls>
                                                 <source :src="workImage.file" type="video/mp4">
                                                 Your browser does not support the video tag.
                                             </video>

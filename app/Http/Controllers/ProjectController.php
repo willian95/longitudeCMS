@@ -19,45 +19,55 @@ class ProjectController extends Controller
             $project->title = $request->title;
             $project->description = $request->description;
             $project->image = $request->image;
-            $project->file = $request->file;
-            $project->type = $request->type;
+
+            if($request->mainFileTypeSelect == '360'){
+                $project->file = $request->img360;
+                $project->type = "360";
+            }else{
+                $project->file = $request->file;
+                $project->type = $request->type;
+            }
+
+            
             $project->save();
 
-            if($this->prepareRender($request->file, $request->type)){
+            if($request->mainFileTypeSelect == 'file'){
+                if($this->prepareRender($request->file, $request->type)){
 
-              
-                if(strpos(strtoupper($request->type), "ZIP") > -1){
-    
-                    $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $request->file);
-
-                    $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
-                    $folderName = str_replace(".zip", "", $folderName);
-                    $folderName = str_replace("/", "", $folderName);
-
-                    if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
-
-                        mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
-
-                    }
-
-                    $zip = new \ZipArchive;
-                    $res = $zip->open($fileName);
-                    if ($res === TRUE) {
-                        $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
-                        $zip->close();
-
-                        $project->file = env('RENDER_DOMAIN').$folderName."/index.html";
-                        $project->update();
-
-            
-                    } else {
-                        return response()->json(["success" => false]);
-                    }
-
-        
-                }
-            
                 
+                    if(strpos(strtoupper($request->type), "ZIP") > -1){
+        
+                        $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $request->file);
+
+                        $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
+                        $folderName = str_replace(".zip", "", $folderName);
+                        $folderName = str_replace("/", "", $folderName);
+
+                        if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
+
+                            mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
+
+                        }
+
+                        $zip = new \ZipArchive;
+                        $res = $zip->open($fileName);
+                        if ($res === TRUE) {
+                            $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
+                            $zip->close();
+
+                            $project->file = env('RENDER_DOMAIN').$folderName."/index.html";
+                            $project->update();
+
+                
+                        } else {
+                            return response()->json(["success" => false]);
+                        }
+
+            
+                    }
+                
+                    
+                }
             }
 
             $this->storeFiles($request, $project->id);
@@ -78,46 +88,57 @@ class ProjectController extends Controller
         foreach($request->filesUpload as $fileUpload){
             
             $modelFile = new File;
-            $modelFile->file = $fileUpload["finalName"];
-            $modelFile->type = $fileUpload["extension"];
+            if( $fileUpload["extension"] == "360"){
+                $modelFile->file = $fileUpload["finalName"];
+                $modelFile->type = $fileUpload["extension"];
+            }else{
+                $modelFile->file = $fileUpload["finalName"];
+                $modelFile->type = $fileUpload["extension"];
+            }
+            
             $modelFile->project_id = $project_id;
             $modelFile->save();
 
-            if($this->prepareRender($fileUpload["finalName"], $fileUpload["extension"])){
-
-                if(strpos(strtoupper($fileUpload["extension"]), "ZIP") > -1){
-    
-                    $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $fileUpload["finalName"]);
-
-                    $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
-                    $folderName = str_replace(".zip", "", $folderName);
-                    $folderName = str_replace("/", "", $folderName);
-
-                    if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
-
-                        mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
-
-                    }
-
-                    $zip = new \ZipArchive;
-                    $res = $zip->open($fileName);
-                    if ($res === TRUE) {
-                        $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
-                        $zip->close();
-                        
-                        $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
-                        $modelFile->update();
-
-            
-                    } else {
-                        return response()->json(["success" => false]);
-                    }
-
-        
-                }
-            
+            if( $fileUpload["extension"] == "file"){
                 
+                if($this->prepareRender($fileUpload["finalName"], $fileUpload["extension"])){
+
+                    if(strpos(strtoupper($fileUpload["extension"]), "ZIP") > -1){
+        
+                        $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $fileUpload["finalName"]);
+    
+                        $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
+                        $folderName = str_replace(".zip", "", $folderName);
+                        $folderName = str_replace("/", "", $folderName);
+    
+                        if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
+    
+                            mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
+    
+                        }
+    
+                        $zip = new \ZipArchive;
+                        $res = $zip->open($fileName);
+                        if ($res === TRUE) {
+                            $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
+                            $zip->close();
+                            
+                            $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
+                            $modelFile->update();
+    
+                
+                        } else {
+                            return response()->json(["success" => false]);
+                        }
+    
+            
+                    }
+                
+                    
+                }
+
             }
+            
 
         }
 
@@ -138,49 +159,61 @@ class ProjectController extends Controller
         $project->title = $request->title;
         $project->description = $request->description;
         $project->image = $request->image;
+        
         if(isset($request->file)){
-            $project->file = $request->file;
-            $project->type = $request->type;
+
+            if($request->mainFileTypeSelect == '360'){
+
+                $project->file = $request->file;
+                $project->type = $request->type;
+
+            }else{
+                $project->file = $request->file;
+                $project->type = $request->type;
+            }
+
         }
         
         $project->update();
 
-        if(isset($request->file)){
-            if($this->prepareRender($request->file, $request->type)){
+        if($request->mainFileTypeSelect == 'file'){
+            if(isset($request->file)){
+                if($this->prepareRender($request->file, $request->type)){
+
+                    
+                    if(strpos(strtoupper($request->type), "ZIP") > -1){
+
+                        $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $request->file);
+
+                        $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
+                        $folderName = str_replace(".zip", "", $folderName);
+                        $folderName = str_replace("/", "", $folderName);
+
+                        if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
+
+                            mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
+
+                        }
+
+                        $zip = new \ZipArchive;
+                        $res = $zip->open($fileName);
+                        if ($res === TRUE) {
+                            $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
+                            $zip->close();
+
+                            $project->file = env('RENDER_DOMAIN').$folderName."/index.html";
+                            $project->update();
 
                 
-                if(strpos(strtoupper($request->type), "ZIP") > -1){
-
-                    $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $request->file);
-
-                    $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
-                    $folderName = str_replace(".zip", "", $folderName);
-                    $folderName = str_replace("/", "", $folderName);
-
-                    if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
-
-                        mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
-
-                    }
-
-                    $zip = new \ZipArchive;
-                    $res = $zip->open($fileName);
-                    if ($res === TRUE) {
-                        $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
-                        $zip->close();
-
-                        $project->file = env('RENDER_DOMAIN').$folderName."/index.html";
-                        $project->update();
+                        } else {
+                            return response()->json(["success" => false]);
+                        }
 
             
-                    } else {
-                        return response()->json(["success" => false]);
                     }
-
-        
+                
+                    
                 }
-            
-                
             }
         }
         $this->updateFiles($request, $project->id);
@@ -219,34 +252,36 @@ class ProjectController extends Controller
                 $modelFile->project_id = $project_id;
                 $modelFile->save();
 
-                if($this->prepareRender($workImage["finalName"], $workImage["type"])){
+                if($workImage["type"] == "file"){
+                    if($this->prepareRender($workImage["finalName"], $workImage["type"])){
 
-                    $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $workImage["finalName"]);
+                        $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $workImage["finalName"]);
 
-                    $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
-                    $folderName = str_replace(".zip", "", $folderName);
-                    $folderName = str_replace("/", "", $folderName);
+                        $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
+                        $folderName = str_replace(".zip", "", $folderName);
+                        $folderName = str_replace("/", "", $folderName);
 
-                    if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
+                        if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
 
-                        mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
+                            mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
 
-                    }
+                        }
 
-                    $zip = new \ZipArchive;
-                    $res = $zip->open($fileName);
-                    if ($res === TRUE) {
-                        $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
-                        $zip->close();
+                        $zip = new \ZipArchive;
+                        $res = $zip->open($fileName);
+                        if ($res === TRUE) {
+                            $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
+                            $zip->close();
 
-                        $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
-                        $modelFile->update();
+                            $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
+                            $modelFile->update();
 
+                
+                        } else {
+                            return response()->json(["success" => false]);
+                        }
             
-                    } else {
-                        return response()->json(["success" => false]);
                     }
-        
                 }
 
             }

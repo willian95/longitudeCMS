@@ -51,7 +51,17 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label for="">Tipo de archivo</label>
+                                <select class="form-control" v-model="mainFileTypeSelect">
+                                    <option value="file">Archivo</option>
+                                    <option value="360">Imagen 360</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-8" v-if="mainFileTypeSelect == 'file'">
                             <div class="form-group">
                                 <label for="image">Archivo principal (render 3D, video, imágen (jpg, png))</label>
                                 <form id="form2">
@@ -67,6 +77,13 @@
                                 <p v-if="mainFileStatus == 'subiendo' && mainFileProgress == 100">Espere un momento</p>
                                 <p v-if="mainFileStatus == 'listo' && mainFileProgress == 100">Archivo listo</p>
 
+                            </div>
+                        </div>
+
+                        <div class="col-md-8" v-else>
+                            <div class="form-group">
+                                <label for="image">Archivo principal (Código imagen 360)</label>
+                                <input type="text" class="form-control" v-model="img360">
                             </div>
                         </div>
 

@@ -35,7 +35,11 @@
                 mainFileStatus:"listo",
                 finalMainFileName:"",
                 mainFileType:"",
+                mainFileTypeSelect:"{{ $project->type }}",
+                img360:"",
 
+                secondaryFileTypeSelect:"file",
+                secondaryImg360:"",
                 secondaryPicture:"",
                 secondaryPreviewPicture:"",
                 fileName:""
@@ -296,7 +300,22 @@
             },
             addSecondaryFile(){
 
-                if(this.secondaryPicture != null){
+                if(this.secondaryFileTypeSelect  == '360' && this.secondaryImg360  != ""){
+
+                    this.workImages.push({file: this.secondaryImg360, status: "listo", originalName:this.secondaryImg360, type:"360", finalName:this.secondaryImg360, progress:100})
+                    this.secondaryImg360 = ""
+
+                }
+                else if(this.secondaryFileTypeSelect  == '360' && this.secondaryImg360  == ""){
+
+                    swal({
+                        title: "Oppss!",
+                        text: "Debes añadir una imágen 360",
+                        icon: "error"
+                    });
+
+                }
+                else if(this.secondaryPicture != null && this.secondaryFileTypeSelect  == 'file'){
                     this.uploadSecondaryFile()
                     this.workImages.push({file: this.secondaryPicture, status: "subiendo", originalName:this.fileName, type:"", file:"", progress:0})
 

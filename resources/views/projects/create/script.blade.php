@@ -27,6 +27,8 @@
                 imageProgress:0,
                 pictureStatus:"",
                 finalPictureName:"",
+                mainFileTypeSelect:"file",
+                img360:"",
 
                 mainFile:"",
                 mainFileProgress:0,
@@ -34,6 +36,8 @@
                 finalMainFileName:"",
                 mainFileType:"",
 
+                secondaryFileTypeSelect:"file",
+                secondaryImg360:"",
                 secondaryPicture:"",
                 secondaryPreviewPicture:"",
                 fileName:""
@@ -56,7 +60,7 @@
                     return
                 }
 
-                if(this.finalMainFileName == ""){
+                if(this.finalMainFileName == "" && this.img360 == ""){
 
                     swal({
                         text:"Debes agregar un archivo principal",
@@ -74,7 +78,7 @@
                     }
                 })
 
-                if(completeUploading && this.pictureStatus == "listo" && this.mainFileStatus == "listo"){
+                if((completeUploading && this.pictureStatus == "listo" && this.mainFileStatus == "listo") || (this.mainFileTypeSelect == '360' && this.img360 != "")){
 
                     this.workImages.forEach((data) => {
                         this.imagesToUpload.push({finalName:data.finalName, extension: data.extension})
@@ -86,6 +90,8 @@
                         image: this.finalPictureName,
                         description: CKEDITOR.instances.editor1.getData(),
                         filesUpload: this.imagesToUpload,
+                        img360: this.img360,
+                        mainFileTypeSelect:this.mainFileTypeSelect,
                         file:this.finalMainFileName,
                         type: this.mainFileType,
                     }).then(res => {
@@ -167,7 +173,7 @@
                 }
 
             },
-            uploadMainImage(type){
+            uploadMainImage(){
 
            
 
@@ -300,7 +306,21 @@
             },
             addSecondaryFile(){
 
-                if(this.secondaryPicture != null){
+                if(this.secondaryFileTypeSelect  == '360' && this.secondaryImg360  != ""){
+
+                    this.workImages.push({file: this.secondaryImg360, status: "listo", originalName:this.secondaryImg360, extension:"360", finalName:this.secondaryImg360, progress:100})
+                    this.secondaryImg360 = ""
+                }
+                else if(this.secondaryFileTypeSelect  == '360' && this.secondaryImg360  == ""){
+
+                    swal({
+                        title: "Oppss!",
+                        text: "Debes añadir una imágen 360",
+                        icon: "error"
+                    });
+
+                }
+                else if(this.secondaryPicture != null && this.secondaryFileTypeSelect  == 'file'){
                     this.uploadSecondaryFile()
                     this.workImages.push({file: this.secondaryPicture, status: "subiendo", originalName:this.fileName, extension:"", finalName:"", progress:0})
 

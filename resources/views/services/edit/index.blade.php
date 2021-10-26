@@ -94,6 +94,8 @@
                                             <iframe
                                                 v-if="workImage.type == 'zip' && workImage.file.indexOf('html') > 0" :src="workImage.file">
                                             </iframe>
+
+                                            <div v-html="workImage.file" v-if="workImage.type == '360'"></div>
                                         
                                         </td>
                                         <td>

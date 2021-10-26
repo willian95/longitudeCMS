@@ -70,35 +70,38 @@ class ServiceController extends Controller
                 $modelFile->service_id = $service_id;
                 $modelFile->save();
 
-                if($this->prepareRender($workImage["finalName"], $workImage["type"])){
+                if($modelFile->type = $workImage["type"] == 'file'){
+                    if($this->prepareRender($workImage["finalName"], $workImage["type"])){
 
-                    $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $workImage["finalName"]);
-
-                    $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
-                    $folderName = str_replace(".zip", "", $folderName);
-                    $folderName = str_replace("/", "", $folderName);
-
-                    if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
-
-                        mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
-
-                    }
-
-                    $zip = new \ZipArchive;
-                    $res = $zip->open($fileName);
-                    if ($res === TRUE) {
-                        $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
-                        $zip->close();
-
-                        $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
-                        $modelFile->update();
-
+                        $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $workImage["finalName"]);
+    
+                        $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
+                        $folderName = str_replace(".zip", "", $folderName);
+                        $folderName = str_replace("/", "", $folderName);
+    
+                        if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
+    
+                            mkdir(env('DESTINATION_FOLDER').$folderName, 0777);
+    
+                        }
+    
+                        $zip = new \ZipArchive;
+                        $res = $zip->open($fileName);
+                        if ($res === TRUE) {
+                            $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
+                            $zip->close();
+    
+                            $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
+                            $modelFile->update();
+    
+                
+                        } else {
+                            return response()->json(["success" => false]);
+                        }
             
-                    } else {
-                        return response()->json(["success" => false]);
                     }
-        
                 }
+                
 
             }
 

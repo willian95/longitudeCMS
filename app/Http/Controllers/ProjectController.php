@@ -21,7 +21,7 @@ class ProjectController extends Controller
             $project->image = $request->image;
 
             if($request->mainFileTypeSelect == '360'){
-                $project->file = $request->img360;
+                $project->file =  $request->file;
                 $project->type = "360";
             }else{
                 $project->file = $request->file;
@@ -165,7 +165,7 @@ class ProjectController extends Controller
             if($request->mainFileTypeSelect == '360'){
 
                 $project->file = $request->file;
-                $project->type = $request->type;
+                $project->type = '360';
 
             }else{
                 $project->file = $request->file;

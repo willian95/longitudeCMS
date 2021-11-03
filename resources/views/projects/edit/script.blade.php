@@ -35,7 +35,7 @@
                 mainFileStatus:"listo",
                 finalMainFileName:"",
                 mainFileType:"",
-                mainFileTypeSelect:"{{ $project->type }}",
+                mainFileTypeSelect:"{{ $project->type == 'jpg' || $project->type == 'png' || $project->type == 'zip' ? 'file' : '360' }}",
                 img360:"",
 
                 secondaryFileTypeSelect:"file",
@@ -95,7 +95,7 @@
                                 text: "Proyecto actualizado!",
                                 icon: "success"
                             }).then(function() {
-                                window.location.href = "{{ route('project.list') }}";
+                                //window.location.href = "{{ route('project.list') }}";
                             });
 
 
@@ -287,7 +287,12 @@
                             if(data.originalName.toLowerCase() == returnedName.toLowerCase()){
                                 this.workImages[index].status = "listo";
                                 this.workImages[index].file = res.data.fileRoute
-                                this.workImages[index].type = res.data.extension
+                                if(this.secondaryFileTypeSelect == '360'){
+                                    this.workImages[index].type = '360'
+                                }else{
+                                    this.workImages[index].type = res.data.extension
+                                }
+                                
                             }
                         }
 
@@ -299,23 +304,8 @@
 
             },
             addSecondaryFile(){
-
-                if(this.secondaryFileTypeSelect  == '360' && this.secondaryImg360  != ""){
-
-                    this.workImages.push({file: this.secondaryImg360, status: "listo", originalName:this.secondaryImg360, type:"360", finalName:this.secondaryImg360, progress:100})
-                    this.secondaryImg360 = ""
-
-                }
-                else if(this.secondaryFileTypeSelect  == '360' && this.secondaryImg360  == ""){
-
-                    swal({
-                        title: "Oppss!",
-                        text: "Debes añadir una imágen 360",
-                        icon: "error"
-                    });
-
-                }
-                else if(this.secondaryPicture != null && this.secondaryFileTypeSelect  == 'file'){
+                
+                if(this.secondaryPicture != null){
                     this.uploadSecondaryFile()
                     this.workImages.push({file: this.secondaryPicture, status: "subiendo", originalName:this.fileName, type:"", file:"", progress:0})
 
@@ -408,7 +398,12 @@
                 ).then(res => {
 
                     this.mainFileStatus = "listo";
-                    this.mainFileType = res.data.extension
+                    if(this.mainFileTypeSelect == "360"){
+                        this.mainFileType = "360"
+                    }else{
+                        this.mainFileType = res.data.extension
+                    }
+                    
                     this.finalMainFileName = res.data.fileRoute                    
 
 
@@ -422,14 +417,20 @@
                 this.workImages.splice(index, 1)
 
             },
+            init360(){
+
+                embed360('.embed360');
+
+            }
 
 
         },
         mounted(){
 
             CKEDITOR.replace( 'editor1' );
+            this.init360()
 
-        }
+        },
 
     })
 

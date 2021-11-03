@@ -295,6 +295,8 @@ License: You must have a valid license purchased only from themeforest(the above
 		<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 		<script src="{{ asset('assets/js/pages/custom/user/list-datatable.js') }}"></script>
 		<script src="{{ asset('/js/app.js') }}"></script>
+		<script src="{{ asset('assets/js/embed360.js') }}"></script>
+		
 
 		@stack("scripts")
 

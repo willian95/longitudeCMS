@@ -281,7 +281,13 @@
                             if(data.originalName.toLowerCase() == returnedName.toLowerCase()){
                                 this.workImages[index].status = "listo";
                                 this.workImages[index].file = res.data.fileRoute
-                                this.workImages[index].type = res.data.extension
+
+                                if(this.secondaryFileTypeSelect == '360'){
+                                    this.workImages[index].type = "360"
+                                }else{
+                                    this.workImages[index].type = res.data.extension
+                                }
+                                
                             }
                         }
 
@@ -294,22 +300,7 @@
             },
             addSecondaryFile(){
 
-                if(this.secondaryFileTypeSelect  == '360' && this.secondaryImg360  != ""){
-
-                    this.workImages.push({file: this.secondaryImg360, status: "listo", originalName:this.secondaryImg360, type:"360", finalName:this.secondaryImg360, progress:100})
-                    this.secondaryImg360 = ""
-
-                }
-                else if(this.secondaryFileTypeSelect  == '360' && this.secondaryImg360  == ""){
-
-                    swal({
-                        title: "Oppss!",
-                        text: "Debes añadir una imágen 360",
-                        icon: "error"
-                    });
-
-                }
-                else if(this.secondaryPicture != null){
+                if(this.secondaryPicture != null){
                     this.uploadSecondaryFile()
                     this.workImages.push({file: this.secondaryPicture, status: "subiendo", originalName:this.fileName, type:"", file:"", progress:0})
 
@@ -418,12 +409,18 @@
                 this.workImages.splice(index, 1)
 
             },
+            init360(){
+                console.log("hey")
+                embed360('.embed360');
+
+            }
 
 
         },
         mounted(){
 
             CKEDITOR.replace( 'editor1' );
+            this.init360()
 
         }
 

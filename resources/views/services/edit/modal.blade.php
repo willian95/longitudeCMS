@@ -20,19 +20,13 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-8" v-if="secondaryFileTypeSelect == 'file'">
+                    <div class="col-md-8">
                         <div class="form-group">
                             <label for="type">Archivo (render 3D, video, imágen (jpg, png))</label>
                             <form id="form3">
                                 <input type="file" class="form-control" ref="file" @change="onSecondaryFileChange" accept="*" style="overflow: hidden;">
                             </form>
 
-                        </div>
-                    </div>
-                    <div class="col-md-8" v-else>
-                        <div class="form-group">
-                            <label for="image">Archivo principal (Código imagen 360)</label>
-                            <input type="text" class="form-control" v-model="secondaryImg360">
                         </div>
                     </div>
 

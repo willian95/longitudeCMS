@@ -61,7 +61,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-8" v-if="mainFileTypeSelect == 'file'">
+                        <div class="col-md-8">
                             <div class="form-group">
                                 <label for="image">Archivo principal (render 3D, video, imágen (jpg, png))</label>
                                 <form id="form2">
@@ -79,6 +79,10 @@
                                     v-if="showMainFileType == 'zip'" :src="showMainFilePreview">
                                 </iframe>
 
+                                <div class="embed360" v-if="showMainFileType == '360'" style="height: 450px;">
+                                    <img src="{{ $project->file }}" class="w-100" >
+                                </div>
+
                                 <div v-if="mainFileStatus == 'subiendo'" class="progress-bar progress-bar-striped" role="progressbar" aria-valuemin="0" aria-valuemax="100" :style="{'width': `${mainFileProgress}%`}">
                                     @{{ mainFileProgress }}%
                                 </div>
@@ -88,16 +92,6 @@
                                 <p v-if="mainFileStatus == 'listo' && mainFileProgress == 100">Archivo listo</p>
 
                             </div>
-                        </div>
-
-                        <div class="col-md-8" v-else>
-                            <div class="form-group">
-                                <label for="image">Archivo principal (Código imagen 360)</label>
-                                <input type="text" class="form-control" v-model="img360">
-                            </div>
-
-                            {!! $project->file !!}
-
                         </div>
 
                         <div class="col-md-12">
@@ -133,7 +127,7 @@
                                         <td>@{{ index + 1 }}</td>
                                         <td>
 
-                                            <img id="blah" :src="workImage.file" v-if="workImage.type == 'JPG' || workImage.type == 'PNG'" class="full-image" style="margin-top: 10px; width: 40%">
+                                            <img id="blah" :src="workImage.file" v-if="workImage.type == 'jpg' || workImage.type == 'png'" class="full-image" style="margin-top: 10px; width: 40%">
 
                                             <video style="width: 250px;" v-if="workImage.type == 'MP$'" controls>
                                                 <source :src="workImage.file" type="video/mp4">
@@ -144,7 +138,11 @@
                                                 v-if="workImage.type == 'zip' && workImage.file.indexOf('html') > 0" :src="workImage.file">
                                             </iframe>
 
-                                            <div v-html="workImage.file" v-if="workImage.type == '360'" ></div>
+                                            <div class="embed360" v-if="workImage.type == '360'" style="height: 250px;">
+                                                <img :src="workImage.file" class="w-100" >
+                                            </div>
+
+                                            @{{ init360() }}
                                         
                                         </td>
                                         <td>

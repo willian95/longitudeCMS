@@ -294,7 +294,12 @@
                         if(data.originalName.toLowerCase() == returnedName.toLowerCase()){
                             this.workImages[index].status = "listo";
                             this.workImages[index].finalName = res.data.fileRoute
-                            this.workImages[index].extension = res.data.extension
+                            if(this.secondaryFileTypeSelect == "360"){
+                                this.workImages[index].extension = "360"
+                            }else{
+                                this.workImages[index].extension = res.data.extension
+                            }
+                            
                         }
 
                     })
@@ -306,23 +311,9 @@
             },
             addSecondaryFile(){
 
-                if(this.secondaryFileTypeSelect  == '360' && this.secondaryImg360  != ""){
-
-                    this.workImages.push({file: this.secondaryImg360, status: "listo", originalName:this.secondaryImg360, extension:"360", finalName:this.secondaryImg360, progress:100})
-                    this.secondaryImg360 = ""
-                }
-                else if(this.secondaryFileTypeSelect  == '360' && this.secondaryImg360  == ""){
-
-                    swal({
-                        title: "Oppss!",
-                        text: "Debes añadir una imágen 360",
-                        icon: "error"
-                    });
-
-                }
-                else if(this.secondaryPicture != null && this.secondaryFileTypeSelect  == 'file'){
+                if(this.secondaryPicture != null){
                     this.uploadSecondaryFile()
-                    this.workImages.push({file: this.secondaryPicture, status: "subiendo", originalName:this.fileName, extension:"", finalName:"", progress:0})
+                    this.workImages.push({file: this.secondaryPicture, status: "subiendo", originalName:this.fileName, extension:"", finalName:"", progress:0 })
 
                     this.secondaryPicture = ""
                     this.secondaryPreviewPicture = ""
@@ -419,6 +410,12 @@
                 }).catch(err => {
                     console.log(err)
                 })
+
+            },
+
+            deleteWorkImage(index){
+
+                this.workImages.splice(index, 1)
 
             },
 

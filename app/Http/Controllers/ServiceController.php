@@ -69,8 +69,8 @@ class ServiceController extends Controller
                 $modelFile->type = $workImage["type"];
                 $modelFile->service_id = $service_id;
                 $modelFile->save();
-
-                if($modelFile->type = $workImage["type"] == 'file'){
+                //
+                if($workImage["type"] == 'file'){
                     if($this->prepareRender($workImage["finalName"], $workImage["type"])){
 
                         $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $workImage["finalName"]);

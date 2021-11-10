@@ -35,6 +35,7 @@ class ServiceController extends Controller
         $service->update();
 
         $this->updateFiles($request, $service->id);
+        dd("entre");
         
         return response()->json(["success" => true, "msg" => "Servicio actualizado"]);
 

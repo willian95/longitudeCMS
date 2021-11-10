@@ -71,6 +71,7 @@ class ServiceController extends Controller
                 $modelFile->save();
                 //
                 if($workImage["type"] == 'file'){
+                    dd("entre");
                     if($this->prepareRender($workImage["finalName"], $workImage["type"])){
 
                         $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $workImage["finalName"]);

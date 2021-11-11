@@ -30,7 +30,7 @@ class ProjectController extends Controller
 
             
             $project->save();
-
+            
             if($request->mainFileTypeSelect == 'file'){
                 if($this->prepareRender($request->file, $request->type)){
 
@@ -99,7 +99,7 @@ class ProjectController extends Controller
             $modelFile->project_id = $project_id;
             $modelFile->save();
 
-            if( $fileUpload["extension"] == "file"){
+            if( $fileUpload["extension"] == "zip"){
                 
                 if($this->prepareRender($fileUpload["finalName"], $fileUpload["extension"])){
 
@@ -176,7 +176,7 @@ class ProjectController extends Controller
         
         $project->update();
 
-        if($request->mainFileTypeSelect == 'file'){
+        if($request->mainFileTypeSelect == 'zip'){
             if(isset($request->file)){
                 if($this->prepareRender($request->file, $request->type)){
 
@@ -252,7 +252,7 @@ class ProjectController extends Controller
                 $modelFile->project_id = $project_id;
                 $modelFile->save();
 
-                if($workImage["type"] == "file"){
+                if($workImage["type"] == "zip"){
                     if($this->prepareRender($workImage["finalName"], $workImage["type"])){
 
                         $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $workImage["finalName"]);

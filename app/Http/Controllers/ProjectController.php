@@ -10,6 +10,30 @@ use App\Models\File;
 
 class ProjectController extends Controller
 {
+
+    function makeSlug($title){
+
+        $slug = strtolower($title);
+        $slug = str_replace("á", "a", $slug);
+        $slug = str_replace("é", "e", $slug);
+        $slug = str_replace("í", "i", $slug);
+        $slug = str_replace("ó", "o", $slug);
+        $slug = str_replace("ú", "u", $slug);
+        $slug = str_replace("/", "-", $slug);
+        $slug = str_replace(" ", "-", $slug);
+        $slug = str_replace("?", "-", $slug);
+        return $slug;
+    }
+
+    function validateSlug($slug){
+
+        if(Project::where("slug", $slug)->count() > 0){
+            return false;
+        }
+
+        return true;
+
+    }
     
     function store(projectsStoreRequest $request){
 
@@ -19,6 +43,18 @@ class ProjectController extends Controller
             $project->title = $request->title;
             $project->description = $request->description;
             $project->image = $request->image;
+            $slug = $this->makeSlug($request->title);
+            
+            if($this->validateSlug($slug)){
+
+                $project->slug = $slug;
+
+            }else{
+
+                $project->slug = $slug."-".uniqid();
+
+            }
+
 
             if($request->mainFileTypeSelect == '360'){
                 $project->file =  $request->file;
@@ -159,6 +195,18 @@ class ProjectController extends Controller
         $project->title = $request->title;
         $project->description = $request->description;
         $project->image = $request->image;
+
+        $slug = $this->makeSlug($request->title);
+
+        if(Project::where("slug", $slug)->where("id", "<>",$request->id)->count() == 0){
+
+            $project->slug = $slug;
+
+        }else{
+
+            $project->slug = $slug."-".uniqid();
+
+        }
         
         if(isset($request->file)){
 

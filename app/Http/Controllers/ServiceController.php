@@ -71,9 +71,9 @@ class ServiceController extends Controller
                 $modelFile->save();
                 //
                 if($workImage["type"] == 'file'){
-                   
+                    dump("entre3");
                     if($this->prepareRender($workImage["finalName"], $workImage["type"])){
-
+                        dump("entre4");
                         $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $workImage["finalName"]);
     
                         $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
@@ -89,12 +89,13 @@ class ServiceController extends Controller
                         $zip = new \ZipArchive;
                         $res = $zip->open($fileName);
                         if ($res === TRUE) {
+                            dump("entre5");
                             $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
                             $zip->close();
     
                             $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
                             $modelFile->update();
-    
+                            dump("entre6");
                 
                         } else {
                             return response()->json(["success" => false]);

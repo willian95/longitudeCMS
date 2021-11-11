@@ -69,6 +69,8 @@ class ServiceController extends Controller
                 $modelFile->type = $workImage["type"];
                 $modelFile->service_id = $service_id;
                 $modelFile->save();
+
+                dump($workImage);
                 //
                 if($workImage["type"] == 'file'){
                     dump("entre3");

@@ -35,8 +35,7 @@ class ServiceController extends Controller
         $service->update();
 
         $this->updateFiles($request, $service->id);
-        dd("entre");
-        
+        dd("final");
         return response()->json(["success" => true, "msg" => "Servicio actualizado"]);
 
     }
@@ -61,10 +60,10 @@ class ServiceController extends Controller
         foreach($deleteWorkImages as $imageDelete){
             ServiceFile::where("id", $imageDelete)->delete();
         }
-
+        dump("entre1");
         foreach($request->filesUpload as $workImage){
             if(!isset($workImage["id"])){
-                
+                dump("entre2");
                 $modelFile = new ServiceFile;
                 $modelFile->file = $workImage["finalName"];
                 $modelFile->type = $workImage["type"];
@@ -72,7 +71,7 @@ class ServiceController extends Controller
                 $modelFile->save();
                 //
                 if($workImage["type"] == 'file'){
-                    dd("entre");
+                   
                     if($this->prepareRender($workImage["finalName"], $workImage["type"])){
 
                         $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $workImage["finalName"]);

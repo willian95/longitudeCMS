@@ -35,7 +35,7 @@ class ServiceController extends Controller
         $service->update();
 
         $this->updateFiles($request, $service->id);
-        dd("final");
+  
         return response()->json(["success" => true, "msg" => "Servicio actualizado"]);
 
     }
@@ -60,10 +60,10 @@ class ServiceController extends Controller
         foreach($deleteWorkImages as $imageDelete){
             ServiceFile::where("id", $imageDelete)->delete();
         }
-        dump("entre1");
+        
         foreach($request->filesUpload as $workImage){
             if(!isset($workImage["id"])){
-                dump("entre2");
+           
                 $modelFile = new ServiceFile;
                 $modelFile->file = $workImage["finalName"];
                 $modelFile->type = $workImage["type"];
@@ -73,9 +73,9 @@ class ServiceController extends Controller
                 //dump($workImage);
                 //
                 if($workImage["type"] == 'zip'){
-                    dump("entre3");
+           
                     if($this->prepareRender($workImage["finalName"], $workImage["type"])){
-                        dump("entre4");
+                      
                         $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $workImage["finalName"]);
     
                         $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
@@ -91,13 +91,13 @@ class ServiceController extends Controller
                         $zip = new \ZipArchive;
                         $res = $zip->open($fileName);
                         if ($res === TRUE) {
-                            dump("entre5");
+               
                             $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
                             $zip->close();
     
                             $modelFile->file = env('RENDER_DOMAIN').$folderName."/index.html";
                             $modelFile->update();
-                            dump("entre6");
+                 
                 
                         } else {
                             return response()->json(["success" => false]);

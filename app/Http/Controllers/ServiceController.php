@@ -70,9 +70,9 @@ class ServiceController extends Controller
                 $modelFile->service_id = $service_id;
                 $modelFile->save();
 
-                dump($workImage);
+                //dump($workImage);
                 //
-                if($workImage["type"] == 'file'){
+                if($workImage["type"] == 'zip'){
                     dump("entre3");
                     if($this->prepareRender($workImage["finalName"], $workImage["type"])){
                         dump("entre4");

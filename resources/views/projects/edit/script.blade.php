@@ -95,7 +95,7 @@
                                 text: "Proyecto actualizado!",
                                 icon: "success"
                             }).then(function() {
-                                //window.location.href = "{{ route('project.list') }}";
+                                window.location.href = "{{ route('project.list') }}";
                             });
 
 

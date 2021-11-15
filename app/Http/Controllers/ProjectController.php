@@ -87,6 +87,7 @@ class ProjectController extends Controller
 
                         $zip = new \ZipArchive;
                         $res = $zip->open($fileName);
+                        dump($res);
                         if ($res === TRUE) {
                             $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
                             $zip->close();

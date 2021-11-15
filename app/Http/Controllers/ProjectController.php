@@ -79,7 +79,7 @@ class ProjectController extends Controller
                         $folderName = str_replace(".zip", "", $folderName);
                         $folderName = str_replace("/", "", $folderName);
 
-                        dump($folderName);
+    
 
                         if(!file_exists(env('DESTINATION_FOLDER').$folderName)){
 
@@ -89,7 +89,8 @@ class ProjectController extends Controller
 
                         $zip = new \ZipArchive;
                         $res = $zip->open($fileName);
-                       
+                        dd($fileName);
+                        dump($res);
                         if ($res === TRUE) {
                             $zip->extractTo(env('DESTINATION_FOLDER').$folderName);
                             $zip->close();

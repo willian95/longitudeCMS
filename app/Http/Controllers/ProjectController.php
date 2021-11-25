@@ -100,6 +100,7 @@ class ProjectController extends Controller
 
                 
                         } else {
+                            dump("error 1");
                             return response()->json(["success" => false]);
                         }
 
@@ -168,6 +169,7 @@ class ProjectController extends Controller
     
                 
                         } else {
+                            dump("error 2");
                             return response()->json(["success" => false]);
                         }
     
@@ -258,6 +260,7 @@ class ProjectController extends Controller
 
                 
                         } else {
+                            dump("error 3");
                             return response()->json(["success" => false]);
                         }
 
@@ -330,6 +333,7 @@ class ProjectController extends Controller
 
                 
                         } else {
+                            dump("error 4");
                             return response()->json(["success" => false]);
                         }
             

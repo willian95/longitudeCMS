@@ -194,7 +194,7 @@
         height: 100%;
         top: 0;
         left: 0;
-        background: rgb(19 44 84 / 58%);
+        background: rgb(0 0 0 / 7%);
     }
 
 

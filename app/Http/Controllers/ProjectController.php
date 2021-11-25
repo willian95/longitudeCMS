@@ -74,7 +74,7 @@ class ProjectController extends Controller
                     if(strpos(strtoupper($request->type), "ZIP") > -1){
         
                         $fileName = str_replace(env('APP_URL'), env('ROOT_FOLDER'), $request->file);
-                        dump($fileName);
+              
                         $folderName = str_replace(env('ROOT_FOLDER')."files", "", $fileName);
                         $folderName = str_replace(".zip", "", $folderName);
                         $folderName = str_replace("/", "", $folderName);
@@ -88,7 +88,7 @@ class ProjectController extends Controller
                         }
 
                         $zip = new \ZipArchive;
-                        $res = $zip->open($folderName);
+                        $res = $zip->open($fileName);
                        
                         
                         if ($res === TRUE) {
